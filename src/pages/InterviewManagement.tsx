@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -10,8 +9,8 @@ import { Badge } from "@/components/ui/badge";
 import { Copy, Link, Mail, Play, Plus, RefreshCw } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import DashboardCard from "@/components/DashboardCard";
+import { useNavigate } from "react-router-dom";
 
-// Mocked data
 const mockQuestionCategories = [
   {
     id: "leadership",
@@ -47,13 +46,13 @@ const mockQuestionCategories = [
 
 const InterviewManagement = () => {
   const { toast } = useToast();
+  const navigate = useNavigate();
   const [position, setPosition] = useState("");
   const [candidateName, setCandidateName] = useState("");
   const [candidateEmail, setCandidateEmail] = useState("");
   const [selectedQuestions, setSelectedQuestions] = useState<string[]>([]);
   const [generatedLink, setGeneratedLink] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
-  // Add state for interview links to track all generated links
   const [interviewLinks, setInterviewLinks] = useState<{link: string, position: string, candidate: string, date: string}[]>([]);
 
   const handleGenerateLink = () => {
@@ -68,13 +67,11 @@ const InterviewManagement = () => {
 
     setIsGenerating(true);
     
-    // Simulate API call
     setTimeout(() => {
       const randomId = Math.random().toString(36).substring(2, 10);
       const newLink = `https://interview.example.com/${randomId}`;
       setGeneratedLink(newLink);
       
-      // Add to interview links array
       const currentDate = new Date().toLocaleDateString('en-US', {
         year: 'numeric',
         month: 'short',
@@ -139,6 +136,11 @@ const InterviewManagement = () => {
     setCandidateEmail("");
     setSelectedQuestions([]);
     setGeneratedLink("");
+  };
+
+  const handlePreviewInterview = (interviewLink: string) => {
+    const interviewId = interviewLink.substring(interviewLink.lastIndexOf('/') + 1);
+    navigate(`/interview-session/${interviewId}`);
   };
 
   return (
@@ -346,7 +348,6 @@ const InterviewManagement = () => {
             )}
           </div>
           
-          {/* Show generated links section */}
           {interviewLinks.length > 0 && (
             <DashboardCard>
               <CardHeader>
@@ -377,6 +378,14 @@ const InterviewManagement = () => {
                         >
                           <Copy className="h-4 w-4 mr-1" />
                           Copy
+                        </Button>
+                        <Button 
+                          variant="outline"
+                          size="sm"
+                          onClick={() => handlePreviewInterview(interview.link)}
+                        >
+                          <Play className="h-4 w-4 mr-1" />
+                          Preview
                         </Button>
                       </div>
                     </div>

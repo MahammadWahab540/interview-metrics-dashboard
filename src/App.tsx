@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import InterviewManagement from "./pages/InterviewManagement";
 import CandidateAnalysis from "./pages/CandidateAnalysis";
+import InterviewSession from "./pages/InterviewSession";
 import NotFound from "./pages/NotFound";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import Navbar from "./components/Navbar";
@@ -27,6 +28,7 @@ const App = () => (
                 <Route path="/" element={<Index />} />
                 <Route path="/interview-management" element={<InterviewManagement />} />
                 <Route path="/candidate-analysis" element={<CandidateAnalysis />} />
+                <Route path="/interview-session/:interviewId" element={<InterviewSession />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </main>
