@@ -53,6 +53,8 @@ const InterviewManagement = () => {
   const [selectedQuestions, setSelectedQuestions] = useState<string[]>([]);
   const [generatedLink, setGeneratedLink] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
+  // Add state for interview links to track all generated links
+  const [interviewLinks, setInterviewLinks] = useState<{link: string, position: string, candidate: string, date: string}[]>([]);
 
   const handleGenerateLink = () => {
     if (!position || !candidateName || selectedQuestions.length === 0) {
@@ -68,8 +70,27 @@ const InterviewManagement = () => {
     
     // Simulate API call
     setTimeout(() => {
-      const link = `https://interview.example.com/${Math.random().toString(36).substring(2, 10)}`;
-      setGeneratedLink(link);
+      const randomId = Math.random().toString(36).substring(2, 10);
+      const newLink = `https://interview.example.com/${randomId}`;
+      setGeneratedLink(newLink);
+      
+      // Add to interview links array
+      const currentDate = new Date().toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric'
+      });
+      
+      setInterviewLinks(prev => [
+        {
+          link: newLink,
+          position,
+          candidate: candidateName,
+          date: currentDate
+        },
+        ...prev
+      ]);
+      
       setIsGenerating(false);
       
       toast({
@@ -324,6 +345,46 @@ const InterviewManagement = () => {
               </div>
             )}
           </div>
+          
+          {/* Show generated links section */}
+          {interviewLinks.length > 0 && (
+            <DashboardCard>
+              <CardHeader>
+                <CardTitle>Generated Interview Links</CardTitle>
+                <CardDescription>
+                  Recently created interview links
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {interviewLinks.map((interview, index) => (
+                    <div key={index} className="flex items-center justify-between p-3 border rounded-lg bg-white/50 hover:bg-white/80 transition-colors">
+                      <div className="space-y-1">
+                        <div className="font-medium">{interview.candidate}</div>
+                        <div className="text-sm text-muted-foreground">{interview.position} • {interview.date}</div>
+                      </div>
+                      <div className="flex gap-2">
+                        <Button 
+                          variant="outline" 
+                          size="sm"
+                          onClick={() => {
+                            navigator.clipboard.writeText(interview.link);
+                            toast({
+                              title: "Link copied",
+                              description: "Interview link copied to clipboard"
+                            });
+                          }}
+                        >
+                          <Copy className="h-4 w-4 mr-1" />
+                          Copy
+                        </Button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </DashboardCard>
+          )}
         </TabsContent>
 
         <TabsContent value="manage">
