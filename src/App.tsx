@@ -8,6 +8,7 @@ import Index from "./pages/Index";
 import InterviewManagement from "./pages/InterviewManagement";
 import CandidateAnalysis from "./pages/CandidateAnalysis";
 import InterviewSession from "./pages/InterviewSession";
+import CandidateRecording from "./pages/CandidateRecording";
 import NotFound from "./pages/NotFound";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import Navbar from "./components/Navbar";
@@ -29,6 +30,7 @@ const App = () => (
                 <Route path="/interview-management" element={<InterviewManagement />} />
                 <Route path="/candidate-analysis" element={<CandidateAnalysis />} />
                 <Route path="/interview-session/:interviewId" element={<InterviewSession />} />
+                <Route path="/candidate-recording" element={<CandidateRecording />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </main>
