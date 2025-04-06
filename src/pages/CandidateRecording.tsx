@@ -3,7 +3,7 @@ import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { useToast } from "@/components/ui/use-toast";
-import { AlertCircle, Camera, MicrophoneIcon, Video } from "lucide-react";
+import { AlertCircle, Camera, Mic, Video } from "lucide-react";
 import DashboardCard from "@/components/DashboardCard";
 
 const CandidateRecording = () => {
@@ -209,7 +209,7 @@ const CandidateRecording = () => {
                   <span>{cameraAccessGranted ? "Camera ready" : "No camera"}</span>
                 </div>
                 <div className="flex items-center gap-1 text-sm text-slate-500">
-                  <MicrophoneIcon className="h-4 w-4" />
+                  <Mic className="h-4 w-4" />
                   <span>{cameraAccessGranted ? "Microphone ready" : "No microphone"}</span>
                 </div>
               </div>
