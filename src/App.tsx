@@ -10,6 +10,7 @@ import CandidateAnalysis from "./pages/CandidateAnalysis";
 import InterviewSession from "./pages/InterviewSession";
 import CandidateRecording from "./pages/CandidateRecording";
 import NotFound from "./pages/NotFound";
+import Login from "./pages/Login";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import Navbar from "./components/Navbar";
 
@@ -27,6 +28,7 @@ const App = () => (
             <main className="flex-1 px-0 overflow-auto">
               <Routes>
                 <Route path="/" element={<Index />} />
+                <Route path="/login" element={<Login />} />
                 <Route path="/interview-management" element={<InterviewManagement />} />
                 <Route path="/candidate-analysis" element={<CandidateAnalysis />} />
                 <Route path="/interview-session/:interviewId" element={<InterviewSession />} />
